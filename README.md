@@ -16,9 +16,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            
-            /* إعدادات الخلفية المحسنة لضمان الظهور */
-            background-color: #f0f9ff; /* لون احتياطي أزرق فاتح */
+            background-color: #f0f9ff;
             background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
                               url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=1000');
             background-size: cover;
@@ -33,53 +31,27 @@
             border-radius: 30px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.2);
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
             text-align: center;
             border: 4px solid #FFD700;
-            position: relative;
         }
 
-        /* رأس الصفحة الملون */
         .header-section img {
             width: 140px;
             margin-bottom: 15px;
-            filter: drop-shadow(2px 2px 2px #eee);
         }
 
-        .header-section h2 {
-            color: #2E7D32; /* أخضر الوزارة */
-            margin: 5px 0;
-            font-size: 1.5em;
-        }
+        .header-section h2 { color: #2E7D32; margin: 5px 0; font-size: 1.5em; }
+        .header-section h3 { color: #1565C0; margin: 5px 0; font-size: 1.2em; }
 
-        .header-section h3 {
-            color: #1565C0; /* أزرق الإدارة */
-            margin: 5px 0;
-            font-size: 1.2em;
-            font-weight: 600;
-        }
+        h1 { color: #D81B60; font-size: 1.7em; margin: 20px 0; }
 
-        h1 {
-            color: #D81B60; /* وردي زاهي */
-            font-size: 1.7em;
-            margin: 20px 0;
-        }
-
-        /* منطقة الإدخال */
         .input-group {
             background: #fffbe6;
             padding: 20px;
             border-radius: 20px;
             border: 2px dashed #FFCA28;
             margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 12px;
-            font-weight: bold;
-            color: #4527A0;
-            font-size: 1.1em;
         }
 
         input[type="date"] {
@@ -90,15 +62,9 @@
             font-size: 18px;
             text-align: center;
             outline: none;
-            color: #333;
         }
 
-        /* الأزرار الملونة */
-        .btn-container {
-            display: flex;
-            gap: 12px;
-        }
-
+        .btn-container { display: flex; gap: 12px; }
         button {
             flex: 1;
             padding: 14px;
@@ -113,8 +79,6 @@
 
         .calc-btn { background: linear-gradient(45deg, #4CAF50, #2E7D32); }
         .print-btn { background: linear-gradient(45deg, #2196F3, #1565C0); }
-        
-        button:hover { transform: scale(1.03); opacity: 0.9; }
 
         /* صندوق النتيجة */
         #result-box {
@@ -124,38 +88,58 @@
             border-radius: 20px;
             display: none;
             border: 2px solid #03a9f4;
-            animation: bounceIn 0.6s ease;
         }
 
-        .age-text { color: #E64A19; font-size: 1.2em; font-weight: bold; display: block; }
-        .stage-text { color: #2E7D32; font-size: 1.3em; font-weight: bold; margin-top: 8px; display: block; }
-
-        @keyframes bounceIn {
-            0% { opacity: 0; transform: scale(0.3); }
-            50% { opacity: 1; transform: scale(1.05); }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); }
+        /* صندوق المتطلبات الجديد */
+        #requirements-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #FFF3E0;
+            border-radius: 20px;
+            border: 2px solid #FF9800;
+            text-align: right;
+            display: none; /* يظهر فقط عند القبول */
+            animation: fadeIn 0.8s;
         }
 
-        /* تذييل الصفحة */
-        .footer-section {
-            margin-top: 35px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
-
-        .footer-section p { margin: 0; color: #666; font-size: 1.1em; }
-        .footer-section strong {
-            color: #C2185B;
+        .req-title {
+            color: #E65100;
+            font-weight: bold;
             font-size: 1.2em;
-            display: block;
-            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
         }
+
+        .req-title i { margin-left: 10px; font-size: 1.4em; }
+
+        ul.req-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.req-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #FFE0B2;
+            color: #4E342E;
+            font-size: 1.05em;
+        }
+
+        ul.req-list li:last-child { border-bottom: none; }
+
+        .age-text { color: #E64A19; font-size: 1.1em; font-weight: bold; display: block; }
+        .stage-text { color: #2E7D32; font-size: 1.2em; font-weight: bold; margin-top: 5px; display: block; }
+
+        .footer-section { margin-top: 35px; border-top: 1px solid #eee; padding-top: 20px; }
+        .footer-section strong { color: #C2185B; font-size: 1.2em; display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         @media print {
             body { background: white !important; }
-            .main-card { border: 1px solid #000; box-shadow: none; }
             button { display: none; }
+            #requirements-box { display: block !important; } /* يظهر دائماً في الطباعة إذا كان مفعلاً */
         }
     </style>
 </head>
@@ -163,7 +147,7 @@
 
 <div class="main-card">
     <div class="header-section">
-        <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/2/29/Ministry_of_Education_%28Saudi_Arabia%29_Logo.svg/1200px-Ministry_of_Education_%28Saudi_Arabia_Logo.svg.png" alt="شعار وزارة التعليم">
+        <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/2/29/Ministry_of_Education_%28Saudi_Arabia%29_Logo.svg/1200px-Ministry_of_Education_%28Saudi_Arabia_Logo.svg.png" alt="شعار الوزارة">
         <h2>وزارة التعليم</h2>
         <h3>إدارة التعليم بنجران</h3>
     </div>
@@ -171,16 +155,25 @@
     <h1>حساب عمر الطفل 🎒</h1>
     
     <div class="input-group">
-        <label>متى ولد طفلك المبدع؟ ✨</label>
+        <label>يرجى اختيار تاريخ الميلاد ✨</label>
         <input type="date" id="birthDate">
     </div>
 
     <div class="btn-container">
-        <button class="calc-btn" onclick="celebrateResult()">عرض النتيجة 🎉</button>
+        <button class="calc-btn" onclick="processResult()">عرض النتيجة 🎉</button>
         <button class="print-btn" onclick="window.print()">🖨️ طباعة</button>
     </div>
 
     <div id="result-box"></div>
+
+    <div id="requirements-box">
+        <div class="req-title">📌 المتطلبات عند القبول:</div>
+        <ul class="req-list">
+            <li>🍱 وجبة صحية للطفل.</li>
+            <li>👕 اللباس الموحد (بلون بيج).</li>
+            <li>⏰ الالتزام بمواعيد الحضور والانصراف.</li>
+        </ul>
+    </div>
 
     <div class="footer-section">
         <p>المديرة ومصممة الموقع:</p>
@@ -189,21 +182,17 @@
 </div>
 
 <script>
-    function celebrateResult() {
+    function processResult() {
         const input = document.getElementById('birthDate').value;
         const resBox = document.getElementById('result-box');
+        const reqBox = document.getElementById('requirements-box');
         
         if (!input) {
-            alert("فضلاً، حدد تاريخ ميلاد طفلك أولاً 🎈");
+            alert("فضلاً، حدد تاريخ الميلاد أولاً 🎈");
             return;
         }
 
-        // تأثير الاحتفال
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 
         const bDate = new Date(input);
         const today = new Date();
@@ -216,17 +205,31 @@
         }
 
         let stage = "";
-        if (y < 3) stage = "لم يبلغ سن القبول بعد 👶";
-        else if (y == 3) stage = "مستعد للمستوى الأول (روضة 1) 🎨";
-        else if (y == 4) stage = "مستعد للمستوى الثاني (روضة 2) 🧩";
-        else if (y == 5) stage = "مستعد للمستوى الثالث (روضة 3) 📚";
-        else stage = "بطلنا مستعد للمرحلة الابتدائية! 🏫";
+        let isAccepted = false;
+
+        if (y < 3) {
+            stage = "لم يبلغ سن القبول بعد 👶";
+        } else if (y >= 3 && y <= 5) {
+            isAccepted = true;
+            if (y == 3) stage = "مستعد للمستوى الأول (روضة 1) 🎨";
+            else if (y == 4) stage = "مستعد للمستوى الثاني (روضة 2) 🧩";
+            else if (y == 5) stage = "مستعد للمستوى الثالث (روضة 3) 📚";
+        } else {
+            stage = "بطلنا مستعد للمرحلة الابتدائية! 🏫";
+        }
 
         resBox.style.display = "block";
         resBox.innerHTML = `
-            <span class="age-text">عمر طفلك الحبيب: ${y} سنوات و ${m} أشهر</span>
+            <span class="age-text">عمر الطفل: ${y} سنوات و ${m} أشهر</span>
             <span class="stage-text">${stage}</span>
         `;
+
+        // إظهار قائمة الطلبات فقط في حال كان الطفل في سن الروضة
+        if (isAccepted) {
+            reqBox.style.display = "block";
+        } else {
+            reqBox.style.display = "none";
+        }
     }
 </script>
 
