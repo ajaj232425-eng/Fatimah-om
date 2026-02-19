@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!مساعده الاهل لحساب عمر المناسب>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +6,7 @@
     <title>بوابة التسجيل الذكية - تعليم نجران</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         :root {
             --primary: #006d51;
@@ -22,23 +23,26 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
-                        url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=1000');
+            background-color: #f0f9ff;
+            /* خلفية الطفل والحقيبة والأزهار */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
+                              url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=1000');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            background-repeat: no-repeat;
         }
 
         /* العداد التنازلي */
         .countdown-timer {
             background: var(--primary);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 50px;
             margin-bottom: 20px;
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            font-size: 0.9em;
+            font-size: 0.95em;
         }
 
         .main-card {
@@ -53,7 +57,7 @@
         }
 
         .logo-box img { width: 160px; margin-bottom: 10px; }
-        .header-section h2 { color: var(--primary); margin: 5px 0; }
+        .header-section h2 { color: var(--primary); margin: 5px 0; font-size: 1.5em; }
         .header-section h3 { color: var(--secondary); margin: 5px 0; font-size: 1.1em; }
 
         .input-group {
@@ -64,14 +68,17 @@
             margin: 20px 0;
         }
 
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #4527A0; }
+
         input[type="text"], input[type="date"] {
-            width: 90%;
+            width: 100%;
             padding: 12px;
-            margin: 8px 0;
+            margin-bottom: 10px;
             border: 2px solid #FFCA28;
             border-radius: 12px;
             text-align: center;
             font-size: 16px;
+            outline: none;
         }
 
         .btn-container { display: flex; gap: 10px; margin-top: 10px; }
@@ -84,9 +91,11 @@
             font-weight: bold;
             color: white;
             transition: 0.3s;
+            font-size: 16px;
         }
         .calc-btn { background: var(--primary); }
         .print-btn { background: var(--secondary); }
+        button:hover { transform: scale(1.03); opacity: 0.9; }
 
         /* بطاقة التهنئة */
         #congrats-card {
@@ -107,45 +116,54 @@
             gap: 10px;
         }
         .bag-item {
-            font-size: 0.8em;
+            font-size: 0.85em;
             background: white;
             padding: 10px;
             border-radius: 15px;
             border: 1px solid #ddd;
+            font-weight: bold;
         }
 
-        /* زر الواتساب */
+        /* زر الواتساب العائم */
         .whatsapp-float {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
+            bottom: 25px;
+            left: 25px;
             background: #25d366;
             color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50px;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            font-size: 35px;
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
             z-index: 1000;
             text-decoration: none;
+            transition: 0.3s;
         }
+        .whatsapp-float:hover { transform: scale(1.1); background: #1eb954; }
 
         @keyframes slideIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .footer { margin-top: 30px; border-top: 1px solid #eee; padding-top: 15px; }
-        .footer strong { color: var(--accent); display: block; margin-top: 5px; }
+        .footer { margin-top: 35px; border-top: 1px solid #eee; padding-top: 20px; }
+        .footer strong { color: var(--accent); display: block; margin-top: 8px; font-size: 1.1em; }
+
+        @media print {
+            body { background: white !important; background-image: none !important; }
+            .main-card { box-shadow: none; border: 1px solid #000; }
+            .whatsapp-float, .calc-btn, .countdown-timer { display: none !important; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="countdown-timer" id="countdown">جاري حساب موعد العام الدراسي الجديد...</div>
+    <div class="countdown-timer" id="countdown">جاري حساب موعد العام الدراسي...</div>
 
     <div class="main-card">
         <div class="header-section">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Ministry_of_Education_Saudi_Arabia_Logo.svg" alt="Logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Ministry_of_Education_Saudi_Arabia_Logo.svg" alt="شعار التعليم">
             <h2>وزارة التعليم</h2>
             <h3>إدارة التعليم بنجران</h3>
         </div>
@@ -153,32 +171,32 @@
         <h1>حساب القبول الذكي 🎈</h1>
 
         <div class="input-group">
-            <label>اسم الطفل المبدع:</label><br>
-            <input type="text" id="childName" placeholder="أدخل اسم الطفل"><br>
-            <label>تاريخ الميلاد:</label><br>
+            <label>اسم الطفل المبدع:</label>
+            <input type="text" id="childName" placeholder="أدخل اسم الطفل">
+            <label>تاريخ ميلاد الطفل:</label>
             <input type="date" id="birthDate">
         </div>
 
         <div class="btn-container">
             <button class="calc-btn" onclick="processAll()">تحقق من القبول 🎉</button>
-            <button class="print-btn" onclick="window.print()">🖨️ طباعة</button>
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة النتيجة</button>
         </div>
 
         <div id="congrats-card">
-            <h2 id="resTitle" style="color:#D81B60"></h2>
-            <p id="resAge" style="font-weight:bold"></p>
-            <div id="reqSection" style="text-align:right; font-size: 0.9em; background: rgba(255,255,255,0.5); padding: 10px; border-radius: 10px;">
-                <strong>📌 متطلبات هامة:</strong>
-                <ul style="margin:5px 0; padding-right:20px;">
-                    <li>وجبة صحية يومياً 🍱</li>
-                    <li>الزي الموحد (بيج) 👕</li>
-                    <li>الحضور 7:15 صباحاً ⏰</li>
+            <h2 id="resTitle" style="color:#D81B60; margin-bottom:10px;"></h2>
+            <p id="resAge" style="font-weight:bold; font-size:1.1em; color:#333;"></p>
+            <div id="reqSection" style="text-align:right; font-size: 0.95em; background: rgba(255,255,255,0.7); padding: 15px; border-radius: 15px; border-right: 5px solid #FF9800;">
+                <strong style="color:#E65100;">📌 متطلبات هامة عند القبول:</strong>
+                <ul style="margin:10px 0; padding-right:20px; line-height:1.6;">
+                    <li>🍱 وجبة صحية متكاملة للطفل.</li>
+                    <li>👕 اللباس الموحد (بلون بيج).</li>
+                    <li>⏰ الالتزام بمواعيد الحضور (7:15 ص).</li>
                 </ul>
             </div>
-            <p id="tip" style="font-style:italic; color:#555; margin-top:10px;"></p>
+            <p id="tip" style="font-style:italic; color:#555; margin-top:15px; font-weight:500;"></p>
         </div>
 
-        <h4 style="margin-top:25px; color:var(--primary)">🎒 ماذا نضع في حقيبتي؟</h4>
+        <h4 style="margin-top:30px; color:var(--primary); border-bottom: 2px solid #f0f0f0; padding-bottom:10px;">🎒 رفيقي في الحقيبة المدرسية</h4>
         <div class="bag-guide">
             <div class="bag-item">💧<br>ماء فاتر</div>
             <div class="bag-item">🧼<br>مناديل</div>
@@ -191,30 +209,35 @@
         </div>
     </div>
 
-    <a href="https://wa.me/966000000000" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/966175456910" class="whatsapp-float" target="_blank" title="تواصل معنا عبر الواتساب">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <script>
-        // 1. العداد التنازلي (افتراضي لبداية سبتمبر 2026)
+        // العداد التنازلي لبداية العام الدراسي القادم
         function updateCountdown() {
-            const schoolDate = new Date("September 1, 2026 07:00:00").getTime();
+            const schoolDate = new Date("August 23, 2026 07:00:00").getTime();
             const now = new Date().getTime();
             const diff = schoolDate - now;
             
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById("countdown").innerHTML = `⏳ متبقي ${days} يوم على بداية مغامرة العام الدراسي الجديد!`;
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById("countdown").innerHTML = `⏳ متبقي ${days} يوم على بداية مغامرة العام الدراسي الجديد!`;
+            } else {
+                document.getElementById("countdown").innerHTML = "🎉 أهلاً بكم في العام الدراسي الجديد!";
+            }
         }
         setInterval(updateCountdown, 1000);
+        updateCountdown();
 
-        // 2. معالجة القبول والنتيجة
+        // معالجة البيانات والاحتفال
         function processAll() {
             const name = document.getElementById('childName').value;
             const bDateInput = document.getElementById('birthDate').value;
             const card = document.getElementById('congrats-card');
 
             if(!name || !bDateInput) {
-                alert("لطفاً أدخل الاسم وتاريخ الميلاد ✨");
+                alert("لطفاً، أكمل البيانات (الاسم والتاريخ) للمتابعة ✨");
                 return;
             }
 
@@ -229,7 +252,8 @@
             const tips = [
                 "نصيحة: عودوا طفلكم على النوم المبكر من الآن 🌙",
                 "نصيحة: شجعوا طفلكم على القراءة والرسم يومياً 🎨",
-                "نصيحة: تحدثوا مع طفلكم عن جمال الروضة والأصدقاء 😊"
+                "نصيحة: تحدثوا مع طفلكم عن جمال الروضة والأصدقاء 😊",
+                "نصيحة: دربوا الطفل على الاعتماد على نفسه في الأكل والملبس 👟"
             ];
 
             if (y >= 3 && y <= 5) {
@@ -238,18 +262,28 @@
                 else if(y==4) stage = "روضة 2 (المستوى الثاني)";
                 else stage = "روضة 3 (المستوى الثالث)";
             } else if (y < 3) {
-                stage = "لا يزال صغيراً جداً";
+                stage = "لا يزال صغيراً جداً على سن القبول 👶";
             } else {
-                stage = "مؤهل للمرحلة الابتدائية";
+                stage = "بطلنا تجاوز سن الروضة ومؤهل للابتدائي 🏫";
             }
 
             card.style.display = "block";
             document.getElementById('resTitle').innerHTML = accepted ? `مبارك القبول يا ${name}! 🎉` : "نتيجة الحساب";
-            document.getElementById('resAge').innerHTML = `العمر: ${y} سنوات و ${m} شهر <br> الفئة: ${stage}`;
+            document.getElementById('resAge').innerHTML = `عمر طفلنا: ${y} سنوات و ${m} شهور <br> الفئة: ${stage}`;
             document.getElementById('tip').innerHTML = tips[Math.floor(Math.random()*tips.length)];
             document.getElementById('reqSection').style.display = accepted ? "block" : "none";
 
-            if(accepted) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            if(accepted) {
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#FFD700', '#006d51', '#1565C0', '#D81B60']
+                });
+            }
+            
+            // التمرير التلقائي للنتيجة
+            card.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
