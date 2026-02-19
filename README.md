@@ -3,235 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حساب عمر الطفل - إدارة تعليم نجران</title>
+    <title>بوابة التسجيل الذكية - تعليم نجران</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; }
-        
+        :root {
+            --primary: #006d51;
+            --secondary: #1565C0;
+            --accent: #D81B60;
+            --bg-card: rgba(255, 255, 255, 0.96);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background-color: #f0f9ff;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
-                              url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=1000');
+            background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
+                        url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=1000');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-repeat: no-repeat;
+        }
+
+        /* العداد التنازلي */
+        .countdown-timer {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 0.9em;
         }
 
         .main-card {
-            background: rgba(255, 255, 255, 0.98);
+            background: var(--bg-card);
             padding: 30px;
             border-radius: 30px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.2);
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             text-align: center;
             border: 4px solid #FFD700;
         }
 
-        .header-section img {
-            width: 140px;
-            margin-bottom: 15px;
-        }
-
-        .header-section h2 { color: #2E7D32; margin: 5px 0; font-size: 1.5em; }
-        .header-section h3 { color: #1565C0; margin: 5px 0; font-size: 1.2em; }
-
-        h1 { color: #D81B60; font-size: 1.7em; margin: 20px 0; }
+        .logo-box img { width: 160px; margin-bottom: 10px; }
+        .header-section h2 { color: var(--primary); margin: 5px 0; }
+        .header-section h3 { color: var(--secondary); margin: 5px 0; font-size: 1.1em; }
 
         .input-group {
-            background: #fffbe6;
+            background: #fff9e6;
             padding: 20px;
             border-radius: 20px;
             border: 2px dashed #FFCA28;
-            margin-bottom: 25px;
+            margin: 20px 0;
         }
 
-        input[type="date"] {
-            width: 100%;
+        input[type="text"], input[type="date"] {
+            width: 90%;
             padding: 12px;
+            margin: 8px 0;
             border: 2px solid #FFCA28;
             border-radius: 12px;
-            font-size: 18px;
             text-align: center;
-            outline: none;
+            font-size: 16px;
         }
 
-        .btn-container { display: flex; gap: 12px; }
+        .btn-container { display: flex; gap: 10px; margin-top: 10px; }
         button {
             flex: 1;
             padding: 14px;
-            font-size: 17px;
-            font-weight: bold;
             border-radius: 15px;
             border: none;
             cursor: pointer;
-            transition: 0.3s;
+            font-weight: bold;
             color: white;
+            transition: 0.3s;
         }
+        .calc-btn { background: var(--primary); }
+        .print-btn { background: var(--secondary); }
 
-        .calc-btn { background: linear-gradient(45deg, #4CAF50, #2E7D32); }
-        .print-btn { background: linear-gradient(45deg, #2196F3, #1565C0); }
-
-        /* صندوق النتيجة */
-        #result-box {
+        /* بطاقة التهنئة */
+        #congrats-card {
+            display: none;
             margin-top: 25px;
             padding: 20px;
-            background: #e1f5fe;
+            background: linear-gradient(135deg, #fff9c4, #f8bbd0);
             border-radius: 20px;
-            display: none;
-            border: 2px solid #03a9f4;
+            border: 3px double #D81B60;
+            animation: slideIn 0.5s ease;
         }
 
-        /* صندوق المتطلبات الجديد */
-        #requirements-box {
-            margin-top: 20px;
-            padding: 20px;
-            background: #FFF3E0;
-            border-radius: 20px;
-            border: 2px solid #FF9800;
-            text-align: right;
-            display: none; /* يظهر فقط عند القبول */
-            animation: fadeIn 0.8s;
+        /* دليل الحقيبة */
+        .bag-guide {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .bag-item {
+            font-size: 0.8em;
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #ddd;
         }
 
-        .req-title {
-            color: #E65100;
-            font-weight: bold;
-            font-size: 1.2em;
+        /* زر الواتساب */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50px;
             display: flex;
+            justify-content: center;
             align-items: center;
-            margin-bottom: 10px;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-decoration: none;
         }
 
-        .req-title i { margin-left: 10px; font-size: 1.4em; }
+        @keyframes slideIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        ul.req-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        ul.req-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid #FFE0B2;
-            color: #4E342E;
-            font-size: 1.05em;
-        }
-
-        ul.req-list li:last-child { border-bottom: none; }
-
-        .age-text { color: #E64A19; font-size: 1.1em; font-weight: bold; display: block; }
-        .stage-text { color: #2E7D32; font-size: 1.2em; font-weight: bold; margin-top: 5px; display: block; }
-
-        .footer-section { margin-top: 35px; border-top: 1px solid #eee; padding-top: 20px; }
-        .footer-section strong { color: #C2185B; font-size: 1.2em; display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        @media print {
-            body { background: white !important; }
-            button { display: none; }
-            #requirements-box { display: block !important; } /* يظهر دائماً في الطباعة إذا كان مفعلاً */
-        }
+        .footer { margin-top: 30px; border-top: 1px solid #eee; padding-top: 15px; }
+        .footer strong { color: var(--accent); display: block; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-<div class="main-card">
-    <div class="header-section">
-        <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/2/29/Ministry_of_Education_%28Saudi_Arabia%29_Logo.svg/1200px-Ministry_of_Education_%28Saudi_Arabia_Logo.svg.png" alt="شعار الوزارة">
-        <h2>وزارة التعليم</h2>
-        <h3>إدارة التعليم بنجران</h3>
+    <div class="countdown-timer" id="countdown">جاري حساب موعد العام الدراسي الجديد...</div>
+
+    <div class="main-card">
+        <div class="header-section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Ministry_of_Education_Saudi_Arabia_Logo.svg" alt="Logo">
+            <h2>وزارة التعليم</h2>
+            <h3>إدارة التعليم بنجران</h3>
+        </div>
+
+        <h1>حساب القبول الذكي 🎈</h1>
+
+        <div class="input-group">
+            <label>اسم الطفل المبدع:</label><br>
+            <input type="text" id="childName" placeholder="أدخل اسم الطفل"><br>
+            <label>تاريخ الميلاد:</label><br>
+            <input type="date" id="birthDate">
+        </div>
+
+        <div class="btn-container">
+            <button class="calc-btn" onclick="processAll()">تحقق من القبول 🎉</button>
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة</button>
+        </div>
+
+        <div id="congrats-card">
+            <h2 id="resTitle" style="color:#D81B60"></h2>
+            <p id="resAge" style="font-weight:bold"></p>
+            <div id="reqSection" style="text-align:right; font-size: 0.9em; background: rgba(255,255,255,0.5); padding: 10px; border-radius: 10px;">
+                <strong>📌 متطلبات هامة:</strong>
+                <ul style="margin:5px 0; padding-right:20px;">
+                    <li>وجبة صحية يومياً 🍱</li>
+                    <li>الزي الموحد (بيج) 👕</li>
+                    <li>الحضور 7:15 صباحاً ⏰</li>
+                </ul>
+            </div>
+            <p id="tip" style="font-style:italic; color:#555; margin-top:10px;"></p>
+        </div>
+
+        <h4 style="margin-top:25px; color:var(--primary)">🎒 ماذا نضع في حقيبتي؟</h4>
+        <div class="bag-guide">
+            <div class="bag-item">💧<br>ماء فاتر</div>
+            <div class="bag-item">🧼<br>مناديل</div>
+            <div class="bag-item">👕<br>ملابس بديلة</div>
+        </div>
+
+        <div class="footer">
+            المديرة ومصممة الموقع:
+            <strong>فاطمه صالح آل بحري</strong>
+        </div>
     </div>
 
-    <h1>حساب عمر الطفل 🎒</h1>
-    
-    <div class="input-group">
-        <label>يرجى اختيار تاريخ الميلاد ✨</label>
-        <input type="date" id="birthDate">
-    </div>
+    <a href="https://wa.me/966000000000" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
-    <div class="btn-container">
-        <button class="calc-btn" onclick="processResult()">عرض النتيجة 🎉</button>
-        <button class="print-btn" onclick="window.print()">🖨️ طباعة</button>
-    </div>
-
-    <div id="result-box"></div>
-
-    <div id="requirements-box">
-        <div class="req-title">📌 المتطلبات عند القبول:</div>
-        <ul class="req-list">
-            <li>🍱 وجبة صحية للطفل.</li>
-            <li>👕 اللباس الموحد (بلون بيج).</li>
-            <li>⏰ الالتزام بمواعيد الحضور والانصراف.</li>
-        </ul>
-    </div>
-
-    <div class="footer-section">
-        <p>المديرة ومصممة الموقع:</p>
-        <strong>فاطمه صالح آل بحري</strong>
-    </div>
-</div>
-
-<script>
-    function processResult() {
-        const input = document.getElementById('birthDate').value;
-        const resBox = document.getElementById('result-box');
-        const reqBox = document.getElementById('requirements-box');
-        
-        if (!input) {
-            alert("فضلاً، حدد تاريخ الميلاد أولاً 🎈");
-            return;
+    <script>
+        // 1. العداد التنازلي (افتراضي لبداية سبتمبر 2026)
+        function updateCountdown() {
+            const schoolDate = new Date("September 1, 2026 07:00:00").getTime();
+            const now = new Date().getTime();
+            const diff = schoolDate - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("countdown").innerHTML = `⏳ متبقي ${days} يوم على بداية مغامرة العام الدراسي الجديد!`;
         }
+        setInterval(updateCountdown, 1000);
 
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        // 2. معالجة القبول والنتيجة
+        function processAll() {
+            const name = document.getElementById('childName').value;
+            const bDateInput = document.getElementById('birthDate').value;
+            const card = document.getElementById('congrats-card');
 
-        const bDate = new Date(input);
-        const today = new Date();
-        let y = today.getFullYear() - bDate.getFullYear();
-        let m = today.getMonth() - bDate.getMonth();
+            if(!name || !bDateInput) {
+                alert("لطفاً أدخل الاسم وتاريخ الميلاد ✨");
+                return;
+            }
 
-        if (m < 0 || (m === 0 && today.getDate() < bDate.getDate())) {
-            y--;
-            m += 12;
+            const bDate = new Date(bDateInput);
+            const today = new Date();
+            let y = today.getFullYear() - bDate.getFullYear();
+            let m = today.getMonth() - bDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < bDate.getDate())) { y--; m += 12; }
+
+            let stage = "";
+            let accepted = false;
+            const tips = [
+                "نصيحة: عودوا طفلكم على النوم المبكر من الآن 🌙",
+                "نصيحة: شجعوا طفلكم على القراءة والرسم يومياً 🎨",
+                "نصيحة: تحدثوا مع طفلكم عن جمال الروضة والأصدقاء 😊"
+            ];
+
+            if (y >= 3 && y <= 5) {
+                accepted = true;
+                if(y==3) stage = "روضة 1 (المستوى الأول)";
+                else if(y==4) stage = "روضة 2 (المستوى الثاني)";
+                else stage = "روضة 3 (المستوى الثالث)";
+            } else if (y < 3) {
+                stage = "لا يزال صغيراً جداً";
+            } else {
+                stage = "مؤهل للمرحلة الابتدائية";
+            }
+
+            card.style.display = "block";
+            document.getElementById('resTitle').innerHTML = accepted ? `مبارك القبول يا ${name}! 🎉` : "نتيجة الحساب";
+            document.getElementById('resAge').innerHTML = `العمر: ${y} سنوات و ${m} شهر <br> الفئة: ${stage}`;
+            document.getElementById('tip').innerHTML = tips[Math.floor(Math.random()*tips.length)];
+            document.getElementById('reqSection').style.display = accepted ? "block" : "none";
+
+            if(accepted) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
-
-        let stage = "";
-        let isAccepted = false;
-
-        if (y < 3) {
-            stage = "لم يبلغ سن القبول بعد 👶";
-        } else if (y >= 3 && y <= 5) {
-            isAccepted = true;
-            if (y == 3) stage = "مستعد للمستوى الأول (روضة 1) 🎨";
-            else if (y == 4) stage = "مستعد للمستوى الثاني (روضة 2) 🧩";
-            else if (y == 5) stage = "مستعد للمستوى الثالث (روضة 3) 📚";
-        } else {
-            stage = "بطلنا مستعد للمرحلة الابتدائية! 🏫";
-        }
-
-        resBox.style.display = "block";
-        resBox.innerHTML = `
-            <span class="age-text">عمر الطفل: ${y} سنوات و ${m} أشهر</span>
-            <span class="stage-text">${stage}</span>
-        `;
-
-        // إظهار قائمة الطلبات فقط في حال كان الطفل في سن الروضة
-        if (isAccepted) {
-            reqBox.style.display = "block";
-        } else {
-            reqBox.style.display = "none";
-        }
-    }
-</script>
-
+    </script>
 </body>
 </html>
